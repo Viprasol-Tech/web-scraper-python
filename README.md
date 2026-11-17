@@ -60,15 +60,17 @@ html = '<title>Hi</title><a href="/about">About</a>'
 fetcher = FixtureFetcher({"https://example.com/": html})
 
 page = Scraper(fetcher).scrape("https://example.com/")
-print(page.title)   # "Hi"
-print(page.links)   # ["https://example.com/about"]  -> resolved absolutely
+print(page.title)  # "Hi"
+print(page.links)  # ["https://example.com/about"]  -> resolved absolutely
 
 # Bring your own transport for real HTTP:
 from urllib.request import urlopen
 
+
 def http_fetch(url: str) -> str:
     with urlopen(url) as resp:  # noqa: S310 - caller-controlled URL
         return resp.read().decode("utf-8", "replace")
+
 
 page = Scraper(http_fetch).scrape("https://example.com/")
 ```
